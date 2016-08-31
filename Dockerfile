@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk
 
-RUN apt-get update && apt-get install -y git curl zip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git curl zip apt-transport-https ca-certificates && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_HOME /var/jenkins_home
 ENV JENKINS_SLAVE_AGENT_PORT 50000
@@ -60,6 +60,13 @@ EXPOSE 50000
 
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
+# Setup docker binary
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &&\
+    echo "deb https://apt.dockerproject.org/repo debian-jessie main" >/etc/apt/sources.list.d/docker.list && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y docker-engine && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 USER ${user}
 
 COPY jenkins-support /usr/local/bin/jenkins-support
@@ -69,3 +76,5 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
+
+RUN /usr/local/bin/install-plugins.sh docker-workflow
