@@ -23,7 +23,7 @@ VOLUME /var/jenkins_home
 # `/usr/share/jenkins/ref/` contains all reference configuration we want 
 # to set on a fresh new installation. Use it to bundle additional plugins 
 # or config file with your custom jenkins Docker image.
-RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
+RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d; chown ${uid}:${gid} /usr/share/jenkins/ref/init.groovy.d
 
 ENV TINI_VERSION 0.9.0
 ENV TINI_SHA fa23d1e20732501c3bb8eeeca423c89ac80ed452
