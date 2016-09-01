@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk
 
-RUN apt-get update && apt-get install -y git curl zip apt-transport-https ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git gettext-base curl zip apt-transport-https ca-certificates && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_HOME /var/jenkins_home
 ENV JENKINS_SLAVE_AGENT_PORT 50000
@@ -68,6 +68,9 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 581
     apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN adduser jenkins docker
 
+COPY SimpleThemeDecorator.xml  /tmp/org.codefirst.SimpleThemeDecorator.xml
+RUN chown ${user} /tmp/org.codefirst.SimpleThemeDecorator.xml
+
 USER ${user}
 
 COPY jenkins-support /usr/local/bin/jenkins-support
@@ -78,4 +81,4 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 
-RUN /usr/local/bin/install-plugins.sh docker-workflow workflow-remote-loader workflow-scm-step
+RUN /usr/local/bin/install-plugins.sh docker-workflow workflow-remote-loader workflow-scm-step simple-theme-plugin
