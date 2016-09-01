@@ -66,6 +66,7 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 581
     apt-get update && \
     apt-get install --no-install-recommends -y docker-engine && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN adduser jenkins docker
 
 USER ${user}
 
