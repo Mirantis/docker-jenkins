@@ -5,6 +5,8 @@ touch "${COPY_REFERENCE_FILE_LOG}" || (echo "Can not write to ${COPY_REFERENCE_F
 echo "--- Copying files at $(date)" >> "$COPY_REFERENCE_FILE_LOG"
 find /usr/share/jenkins/ref/ -type f -exec bash -c ". /usr/local/bin/jenkins-support; copy_reference_file '{}'" \;
 
+cat /tmp/org.codefirst.SimpleThemeDecorator.xml | envsubst > $JENKINS_HOME/org.codefirst.SimpleThemeDecorator.xml
+
 cat << EOF >>/usr/share/jenkins/ref/init.groovy.d/executors.groovy
 import jenkins.model.*
 Jenkins.instance.setNumExecutors(${JENKINS_NUM_EXECUTORS:-2})
