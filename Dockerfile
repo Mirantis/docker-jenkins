@@ -77,4 +77,4 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 
-RUN /usr/local/bin/install-plugins.sh docker-workflow workflow-remote-loader
+RUN /usr/local/bin/install-plugins.sh docker-workflow workflow-remote-loader workflow-scm-step
