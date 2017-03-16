@@ -20,23 +20,15 @@ docker run -p 8080:8080 -p 50000:50000 jenkins
 NOTE: read below the _build executors_ part for the role of the `50000` port mapping.
 
 This will store the workspace in /var/jenkins_home. All Jenkins data lives in there - including plugins and configuration.
-You will probably want to make that a persistent volume (recommended):
+You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
 
 ```
-docker run -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home jenkins
+docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins
 ```
 
-This will store the jenkins data in `/your/home` on the host.
-Ensure that `/your/home` is accessible by the jenkins user in container (jenkins user - uid 1000) or use `-u some_other_user` parameter with `docker run`.
+this will automatically create a 'jenkins_home' volume on docker host, that will survive container stop/restart/deletion. 
 
-
-You can also use a volume container:
-
-```
-docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /var/jenkins_home jenkins
-```
-
-Then myjenkins container has the volume (please do read about docker volume handling to find out more).
+Avoid using a bind mount from a folder on host into `/var/jenkins_home`, as this might result in file permission issue. If you _really_ need to bind mount jenkins_home, ensure that directory on host is accessible by the jenkins user in container (jenkins user - uid 1000) or use `-u some_other_user` parameter with `docker run`.
 
 ## Backing up data
 
@@ -48,7 +40,7 @@ This is highly recommended. Treat the jenkins_home directory as you would a data
 If your volume is inside a container - you can use ```docker cp $ID:/var/jenkins_home``` command to extract the data, or other options to find where the volume data is.
 Note that some symlinks on some OSes may be converted to copies (this can confuse jenkins with lastStableBuild links etc)
 
-For more info check Docker docs section on [Managing data in containers](https://docs.docker.com/userguide/dockervolumes/)
+For more info check Docker docs section on [Managing data in containers](https://docs.docker.com/engine/tutorials/dockervolumes/)
 
 # Setting the number of executors
 
@@ -100,6 +92,10 @@ EOF
 docker run --name myjenkins -p 8080:8080 -p 50000:50000 --env JAVA_OPTS="-Djava.util.logging.config.file=/var/jenkins_home/log.properties" -v `pwd`/data:/var/jenkins_home jenkins
 ```
 
+# Configuring reverse proxy
+If you want to install Jenkins behind a reverse proxy with prefix, example: mysite.com/jenkins, you need to add environnement variable `JENKINS_OPTS="--prefix=/jenkins"` and then follow the below procedures to configure your reverse proxy, which will depend if you have Apache ou Nginx:
+- [Apache](https://wiki.jenkins-ci.org/display/JENKINS/Running+Jenkins+behind+Apache)
+- [Nginx](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy)
 
 # Passing Jenkins launcher parameters
 
@@ -142,7 +138,8 @@ FROM jenkins
 # if we want to install via apt
 USER root
 RUN apt-get update && apt-get install -y ruby make more-thing-here
-USER jenkins # drop back to the regular jenkins user - good practice
+# drop back to the regular jenkins user - good practice
+USER jenkins
 ```
 
 In such a derived image, you can customize your jenkins instance with hook scripts or additional plugins.
