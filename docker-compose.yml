@@ -2,8 +2,6 @@ master:
   build: .
   environment:
     JAVA_OPTS: "-Djava.awt.headless=true"
-    JENKINSTHEME_CSS_URL: http://185.22.97.168/material.css
-    JENKINSTHEME_JS_URL: http://185.22.97.168/material.js
   ports:
     - "50000:50000"
     - "8080:8080"
