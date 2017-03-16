@@ -86,6 +86,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         docker-workflow \
         extended-choice-parameter \
         gerrit-trigger \
+        git \
         heavy-job \
         matrix-auth \
         monitoring \
