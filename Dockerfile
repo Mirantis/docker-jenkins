@@ -88,6 +88,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         gerrit-trigger \
         git \
         heavy-job \
+        ldap \
         matrix-auth \
         monitoring \
         permissive-script-security \
