@@ -16,3 +16,7 @@ padding: 9px!important;
 #jenkins-home-link img {
   display:none;
 }
+
+.pane-frame.editor.ace_editor{
+  height: 640px!important;
+}
