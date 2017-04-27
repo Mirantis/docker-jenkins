@@ -84,7 +84,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         description-setter \
         discard-old-build \
         docker-workflow \
-        email-ext-plugin \
+        email-ext \
         extended-choice-parameter \
         extensible-choice-parameter \
         gerrit-trigger \
