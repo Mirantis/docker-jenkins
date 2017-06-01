@@ -91,6 +91,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         git \
         heavy-job \
         ldap \
+        lockable-resources \
         matrix-auth \
         monitoring \
         permissive-script-security \
