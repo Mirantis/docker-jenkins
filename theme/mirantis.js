@@ -1,3 +1,5 @@
+
+// ------ Jenkins ANSI color pure JS plugin https://github.com/jakubjosef/jenkins-ansi-color-js ------ //
 function DOMReady(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
         fn();
