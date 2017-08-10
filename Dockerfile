@@ -88,6 +88,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         extensible-choice-parameter \
         gerrit-trigger \
         git \
+        github \
         heavy-job \
         ldap \
         lockable-resources \
