@@ -80,6 +80,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         build-monitor-plugin \
         build-user-vars-plugin \
         categorized-view \
+        copyartifact \
         description-setter \
         discard-old-build \
         docker-workflow \
@@ -96,6 +97,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         monitoring \
         permissive-script-security \
         pipeline-utility-steps \
+        prometheus \
         rebuild \
         simple-theme-plugin \
         slack \
