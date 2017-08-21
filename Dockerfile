@@ -85,6 +85,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         discard-old-build \
         docker-workflow \
         email-ext \
+        envinject \
         extended-choice-parameter \
         extensible-choice-parameter \
         gerrit-trigger \
