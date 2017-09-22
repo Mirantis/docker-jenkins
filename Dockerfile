@@ -104,6 +104,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         slack \
         ssh-agent \
         test-stability \
+        throttle-concurrents \
         timestamper \
         workflow-cps \
         workflow-remote-loader \
