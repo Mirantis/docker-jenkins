@@ -102,6 +102,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         rebuild \
         simple-theme-plugin \
         slack \
+        ssh-agent \
         test-stability \
         timestamper \
         workflow-cps \
