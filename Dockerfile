@@ -105,7 +105,6 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         ssh-agent \
         test-stability \
         throttle-concurrents \
-        timestamper \
         workflow-cps \
         workflow-remote-loader \
         workflow-scm-step
