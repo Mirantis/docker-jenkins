@@ -97,6 +97,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         lockable-resources \
         matrix-auth \
         monitoring \
+        multiple-scms \
         permissive-script-security \
         pipeline-utility-steps \
         prometheus \
