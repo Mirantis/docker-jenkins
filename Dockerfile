@@ -78,6 +78,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         artifactory \
         build-blocker-plugin \
         build-monitor-plugin \
+        build-timeout \
         build-user-vars-plugin \
         categorized-view \
         copyartifact \
