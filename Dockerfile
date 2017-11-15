@@ -94,6 +94,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         github \
         heavy-job \
         jobConfigHistory \
+        jira \
         ldap \
         lockable-resources \
         matrix-auth \
