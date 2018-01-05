@@ -76,6 +76,7 @@ COPY theme /usr/share/jenkins/ref/userContent/theme
 
 RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-plugins.sh \
         artifactory \
+        blueocean \
         build-blocker-plugin \
         build-monitor-plugin \
         build-timeout \
