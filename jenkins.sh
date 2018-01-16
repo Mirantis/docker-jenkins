@@ -5,8 +5,8 @@ touch "${COPY_REFERENCE_FILE_LOG}" || { echo "Can not write to ${COPY_REFERENCE_
 echo "--- Copying files at $(date)" >> "$COPY_REFERENCE_FILE_LOG"
 find /usr/share/jenkins/ref/ -type f -exec bash -c '. /usr/local/bin/jenkins-support; for arg; do copy_reference_file "$arg"; done' _ {} +
 
-export JENKINSTHEME_CSS_URL=${JENKINSTHEME_CSS_URL:-/userContent/theme/mirantis.css}
-export JENKINSTHEME_JS_URL=${JENKINSTHEME_JS_URL:-/userContent/theme/mirantis.js}
+export JENKINSTHEME_CSS_URL=${JENKINSTHEME_CSS_URL:-/userContent/theme/mirantis.min.css}
+export JENKINSTHEME_JS_URL=${JENKINSTHEME_JS_URL:-/userContent/theme/mirantis.min.js}
 [ -f $JENKINS_HOME/org.codefirst.SimpleThemeDecorator.xml ] || cat /tmp/org.codefirst.SimpleThemeDecorator.xml | envsubst > $JENKINS_HOME/org.codefirst.SimpleThemeDecorator.xml
 
 cat << EOF >>/usr/share/jenkins/ref/init.groovy.d/executors.groovy
