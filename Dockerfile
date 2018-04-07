@@ -1,6 +1,20 @@
 FROM openjdk:8-jdk
 
-RUN apt-get update && apt-get install -y git curl gettext-base python-virtualenv && rm -rf /var/lib/apt/lists/*
+LABEL maintainer="dev@mirantis.com"
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    DEBCONF_NONINTERACTIVE_SEEN=true \
+    LANG=C.UTF-8 \
+    LANGUAGE=$LANG
+SHELL ["/bin/bash", "-xec"]
+
+#  Base apt config
+RUN cd /etc/apt/ \
+  && echo 'Acquire::Languages "none";' > apt.conf.d/docker-no-languages \
+  && echo 'Acquire::GzipIndexes "true"; Acquire::CompressionTypes::Order:: "gz";' > apt.conf.d/docker-gzip-indexes \
+  && echo 'APT::Get::Install-Recommends "false"; APT::Get::Install-Suggests "false";' > apt.conf.d/docker-recommends
+
+RUN apt-get update && apt-get install -y git curl gettext-base python-virtualenv
 
 ENV JENKINS_HOME /var/jenkins_home
 ENV JENKINS_SLAVE_AGENT_PORT 50000
@@ -115,3 +129,14 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         workflow-cps \
         workflow-remote-loader \
         workflow-scm-step
+
+# Switch user for cleanup
+USER root
+# Cleanup.
+RUN apt-get -y autoremove; apt-get -y clean;
+RUN rm -rf /root/.cache
+RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /tmp/*
+RUN rm -rf /var/tmp/*
+# And switch it back
+USER ${user}
