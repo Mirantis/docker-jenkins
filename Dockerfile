@@ -101,6 +101,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         matrix-auth \
         monitoring \
         multiple-scms \
+        performance \
         permissive-script-security \
         pipeline-utility-steps \
         prometheus \
