@@ -104,6 +104,7 @@ RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-pl
         performance \
         permissive-script-security \
         pipeline-utility-steps \
+        plot \
         prometheus \
         rebuild \
         simple-theme-plugin \
