@@ -36,11 +36,6 @@ COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-agent-port.groov
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-# FIXME: Blueocean plugin >= 1.6.2 requires Jenkins >= 2.107, but some plugins are still
-# incompatibble with new Jenkins due to JEP-200 issue. For example performance plugin
-# will be fixed in 3.11 but there is 3.10 at the moment.
-# See: https://wiki.jenkins.io/display/JENKINS/Plugins+affected+by+fix+for+JEP-200
-# Thus Blueocean plugin version is pinned to 1.6.1 below.
 ENV JENKINS_VERSION ${JENKINS_VERSION:-2.104}
 
 # jenkins.war checksum, download will be validated using it
@@ -82,7 +77,7 @@ COPY theme /usr/share/jenkins/ref/userContent/theme
 RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-plugins.sh \
         antisamy-markup-formatter \
         artifactory \
-        blueocean:1.6.1 \
+        blueocean \
         build-blocker-plugin \
         build-monitor-plugin \
         build-timeout \
