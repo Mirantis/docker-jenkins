@@ -8,6 +8,7 @@
 set -o pipefail
 
 REF_DIR=${REF:-/usr/share/jenkins/ref/plugins}
+DEPS_PINNING_FILE=${DEPS_PINNING_FILE:-/usr/share/jenkins/ref/jenkins-plugins-deps}
 FAILED="$REF_DIR/failed-plugins.txt"
 
 . /usr/local/bin/jenkins-support
@@ -80,6 +81,16 @@ checkIntegrity() {
     return $?
 }
 
+getPluginDepsPinnedVersion() {
+    local plugin
+    plugin="$1"
+    pinnedPlugin=$(cat $DEPS_PINNING_FILE | grep "^${plugin}:")
+    if [ -n "$pinnedPlugin" ]; then
+        pinnedPluginVersion="$(echo "$pinnedPlugin" | cut -d':' -f2 | tr -d ' ')"
+        printf '%s' "$pinnedPluginVersion"
+    fi
+}
+
 resolveDependencies() {
     local plugin jpi dependencies
     plugin="$1"
@@ -103,18 +114,22 @@ resolveDependencies() {
             echo "Skipping optional dependency $plugin"
         else
             local pluginInstalled
+            local pluginVersion; pluginVersion=$(getPluginDepsPinnedVersion "${plugin}")
             if pluginInstalled="$(echo "${bundledPlugins}" | grep "^${plugin}:")"; then
                 pluginInstalled="${pluginInstalled//[$'\r']}"
                 local versionInstalled; versionInstalled=$(versionFromPlugin "${pluginInstalled}")
-                local minVersion; minVersion=$(versionFromPlugin "${d}")
+                local minVersion="$pluginVersion"
+                if [ -z "$minVersion" ]; then
+                    minVersion=$(versionFromPlugin "${d}")
+                fi
                 if versionLT "${versionInstalled}" "${minVersion}"; then
                     echo "Upgrading bundled dependency $d ($minVersion > $versionInstalled)"
-                    download "$plugin" &
+                    download "$plugin" "$pluginVersion" &
                 else
                     echo "Skipping already bundled dependency $d ($minVersion <= $versionInstalled)"
                 fi
             else
-                download "$plugin" &
+                download "$plugin" "$pluginVersion" &
             fi
         fi
     done

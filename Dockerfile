@@ -86,50 +86,54 @@ ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
+COPY jenkins-plugins-deps /usr/share/jenkins/ref/jenkins-plugins-deps
 COPY theme /usr/share/jenkins/ref/userContent/theme
 
+# list of plugins which should be installed. Doesn't include deps list, which specified in jenkins-plugins-deps file.
 RUN JENKINS_UC_DOWNLOAD=http://archives.jenkins-ci.org /usr/local/bin/install-plugins.sh \
-        antisamy-markup-formatter \
-        artifactory \
-        blueocean \
-        build-blocker-plugin \
-        build-monitor-plugin \
-        build-timeout \
-        build-user-vars-plugin \
-        categorized-view \
-        copyartifact \
-        description-setter \
-        discard-old-build \
-        docker-workflow \
-        email-ext \
-        envinject \
-        extended-choice-parameter \
-        extensible-choice-parameter \
-        gerrit-trigger \
-        git \
-        github \
-        heavy-job \
-        jobConfigHistory \
-        jira \
-        ldap \
-        lockable-resources \
-        matrix-auth \
-        monitoring \
-        multiple-scms \
-        performance \
-        permissive-script-security \
-        pipeline-utility-steps \
-        plot \
-        prometheus \
-        rebuild \
-        simple-theme-plugin \
-        slack \
-        ssh-agent \
-        test-stability \
-        throttle-concurrents \
-        workflow-cps \
-        workflow-remote-loader \
-        workflow-scm-step
+        antisamy-markup-formatter:1.5 \
+        artifactory:2.16.2 \
+        blueocean:1.9.0 \
+        build-blocker-plugin:1.7.3 \
+        build-monitor-plugin:1.12+build.201809061734 \
+        build-timeout:1.19 \
+        build-user-vars-plugin:1.5 \
+        categorized-view:1.10 \
+        command-launcher:1.2 \
+        copyartifact:1.41 \
+        description-setter:1.10 \
+        discard-old-build:1.05 \
+        docker-workflow:1.17 \
+        email-ext:2.63 \
+        envinject:2.1.6 \
+        extended-choice-parameter:0.76 \
+        extensible-choice-parameter:1.6.0 \
+        gerrit-trigger:2.27.7 \
+        git:3.9.1 \
+        github:1.29.3 \
+        heavy-job:1.1 \
+        jdk-tool:1.1 \
+        jobConfigHistory:2.18.2 \
+        jira:3.0.3 \
+        ldap:1.20 \
+        lockable-resources:2.3 \
+        matrix-auth:2.3 \
+        monitoring:1.74.0 \
+        multiple-scms:0.6 \
+        performance:3.12 \
+        permissive-script-security:0.3 \
+        pipeline-utility-steps:2.1.0 \
+        plot:2.1.0 \
+        prometheus:2.0.0 \
+        rebuild:1.29 \
+        simple-theme-plugin:0.5.1 \
+        slack:2.3 \
+        ssh-agent:1.17 \
+        test-stability:2.3 \
+        throttle-concurrents:2.0.1 \
+        workflow-cps:2.58 \
+        workflow-remote-loader:1.4 \
+        workflow-scm-step:2.7
 
 # Switch user for cleanup
 USER root
